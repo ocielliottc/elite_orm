@@ -1,0 +1,11 @@
+name: elite_orm
+description: A comprehensive ORM built with sqflite in mind.
+version: 1.0.0
+homepage: https://github.com/ocielliottc/elite_orm
+
+environment:
+  sdk: '>=2.18.5 <3.0.0'
+
+dev_dependencies:
+  lints: ^2.0.0
+  test: ^1.16.0
