@@ -4,6 +4,7 @@
 // mapping application calls to the persistence layer, the DAO provides data
 // operations without exposing database details.
 //
+import 'db_type.dart';
 import 'entity.dart';
 
 class Dao<T extends Entity> {
