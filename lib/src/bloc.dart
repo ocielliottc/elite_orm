@@ -12,21 +12,16 @@ import 'entity.dart';
 
 class Bloc<T extends Entity> {
   late Repository<T> _repository;
-
-  // The stream controller is the 'Admin' that manages the state of our stream
-  // of data like adding data, changes the state of the stream and broadcasts
-  // it to observers/subscribers.
   final _controller = StreamController<List<T>>.broadcast();
 
-  Stream<List<T>> get all => _controller.stream;
 
   Bloc(Dao<T> dao) {
     _repository = Repository<T>(dao);
   }
 
+  Stream<List<T>> get all => _controller.stream;
+
   Future<void> get() async {
-    // sink is a way of adding data reactively to the stream
-    // by registering a new event.
     _controller.sink.add(await _repository.get());
   }
 

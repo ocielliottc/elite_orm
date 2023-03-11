@@ -17,7 +17,7 @@ class Dao<T extends Entity> {
   /// Creates new records in the table.
   Future<int> create(T obj) async {
     final db = await _db;
-    return db.insert(_entity.table, obj.toDatabaseMap());
+    return db.insert(_entity.table, obj.toJson());
   }
 
   /// Get all items from the table.
@@ -28,7 +28,7 @@ class Dao<T extends Entity> {
 
     List<T> objects = [];
     for (var item in result) {
-      objects.add(await _entity.fromDatabaseMap(item));
+      objects.add(await _entity.fromJson(item));
     }
     return objects;
   }
@@ -36,7 +36,7 @@ class Dao<T extends Entity> {
   /// Update a record in the table.
   Future<int> update(T obj) async {
     final db = await _db;
-    return await db.update(_entity.table, obj.toDatabaseMap(),
+    return await db.update(_entity.table, obj.toJson(),
         where: "${_entity.idColumn} = ?", whereArgs: [obj.id]);
   }
 
