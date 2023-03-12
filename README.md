@@ -1,6 +1,6 @@
 # elite_orm
 
-A comprehensive ORM built with [sqflite](https://pub.dev/packages/sqflite) in mind.
+A simple and easy-to-use ORM built with [sqflite](https://pub.dev/packages/sqflite) in mind.
 
 ## Getting Started
 

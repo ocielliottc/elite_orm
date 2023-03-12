@@ -1,4 +1,4 @@
-/// A comprehensive ORM built with sqflite in mind.
+/// A simple and easy-to-use ORM built with sqflite in mind.
 library elite_orm;
 
 export 'src/bloc.dart';
