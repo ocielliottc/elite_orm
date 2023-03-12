@@ -28,12 +28,9 @@ Your model class will extend the `Entity` class in the following manner.
 
 ```dart
 class Supplement extends Entity<Supplement> {
-  // Required function to create a Supplement object
-  static Supplement _create() => Supplement();
-
-  // The constructor for your object does not have to be callable
-  // with no parameters.  But, it makes things easier.
-  Supplement([name = "", count = 0, DateTime? expire]) : super(_create) {
+  // The constructor for your object has to be callable
+  // with no parameters if you pass new to the super.
+  Supplement([name = "", count = 0, DateTime? expire]) : super(Supplement.new) {
     // The first data member must be a unique identifier.
     // It will be the primary key.
     members.add(DBMember<String>("name", name));

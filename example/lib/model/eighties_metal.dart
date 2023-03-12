@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 enum MetalSubGenre { death, thrash, speed, hair, doom, sludge }
 
 class Album extends Entity<Album> {
-  static Album create() => Album();
-
-  Album([name = "", DateTime? release, Duration? length]) : super(create) {
+  Album([name = "", DateTime? release, Duration? length]) : super(Album.new) {
     members.add(DBMember<String>("name", name));
     members.add(DateTimeDBMember("release", release ?? DateTime.now()));
     members.add(DurationDBMember("length", length ?? const Duration()));
@@ -22,14 +20,13 @@ class Album extends Entity<Album> {
 // actually be simpler to implement by extending Entity and using
 // DateTimeDBMember.
 class DBDateTimeRange extends DateTimeRange with Serializable {
-  static DBDateTimeRange create() =>
-      DBDateTimeRange(start: DateTime.now(), end: DateTime.now());
-  DBDateTimeRange({required super.start, required super.end});
+  DBDateTimeRange([DateTime? start, DateTime? end])
+      : super(start: start ?? DateTime.now(), end: end ?? DateTime.now());
 
   @override
   Future fromJson(DatabaseMap map) async {
     return DBDateTimeRange(
-        start: DateTime.parse(map["start"]), end: DateTime.parse(map["end"]));
+        DateTime.parse(map["start"]), DateTime.parse(map["end"]));
   }
 
   @override
@@ -39,8 +36,6 @@ class DBDateTimeRange extends DateTimeRange with Serializable {
 }
 
 class EightiesMetal extends Entity<EightiesMetal> {
-  static EightiesMetal _create() => EightiesMetal();
-
   EightiesMetal([
     name = "",
     Album? album,
@@ -51,17 +46,18 @@ class EightiesMetal extends Entity<EightiesMetal> {
     List<String> bandMembers = const [],
     List<int> studioAlbumYears = const [],
     Uint8List? logo,
-  ]) : super(_create) {
+  ]) : super(EightiesMetal.new) {
     // Because this member is first, it is the primary key.
     members.add(DBMember<String>("name", name));
-    members.add(ObjectDBMember<Album>(Album.create, "album", album ?? Album()));
+    members.add(ObjectDBMember<Album>(Album.new, "album", album ?? Album()));
     members.add(EnumDBMember<MetalSubGenre>("type", genre));
     members.add(BoolDBMember("defunct", defunct));
     members.add(DateTimeDBMember("formed", formed ?? DateTime.now()));
-    members.add(ListDBMember<DBDateTimeRange>(
-        DBDateTimeRange.create, "active", active));
+    members.add(
+        ListDBMember<DBDateTimeRange>(DBDateTimeRange.new, "active", active));
     members.add(PrimitiveListDBMember<String>("members", bandMembers));
-    members.add(PrimitiveListDBMember<int>("studioAlbumYears", studioAlbumYears));
+    members
+        .add(PrimitiveListDBMember<int>("studioAlbumYears", studioAlbumYears));
     members.add(BinaryDBMember("logo", logo ?? Uint8List(0)));
   }
 

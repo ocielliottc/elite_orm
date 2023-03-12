@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
       MetalSubGenre.thrash,
       true,
       DateTime(1981),
-      [DBDateTimeRange(start: DateTime(1981), end: DateTime(2019))],
+      [DBDateTimeRange(DateTime(1981), DateTime(2019))],
       ["Tom Araya", "Jeff Hanneman", "Kerry King", "Dave Lombardo"],
       [1983, 1985, 1986, 1988, 1990, 1994, 1996, 1998, 2001, 2006, 2009, 2015],
       logos[0],
@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
       MetalSubGenre.thrash,
       false,
       DateTime(1981, 10, 28),
-      [DBDateTimeRange(start: DateTime(1981), end: DateTime.now())],
+      [DBDateTimeRange(DateTime(1981))],
       ["Cliff Burton", "Kirk Hammet", "James Hetfield", "Lars Ulrich"],
       [1983, 1984, 1986, 1988, 1991, 1996, 1997, 2003, 2008, 2016, 2023],
       logos[1],
@@ -83,8 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
       false,
       DateTime(1983, 7, 1),
       [
-        DBDateTimeRange(start: DateTime(1983), end: DateTime(2002)),
-        DBDateTimeRange(start: DateTime(2004), end: DateTime.now())
+        DBDateTimeRange(DateTime(1983), DateTime(2002)),
+        DBDateTimeRange(DateTime(2004))
       ],
       ["David Ellefson", "Dave Mustaine", "Chris Poland", "Gar Samuelson"],
       [
