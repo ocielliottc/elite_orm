@@ -14,7 +14,6 @@ class Bloc<T extends Entity> {
   late Repository<T> _repository;
   final _controller = StreamController<List<T>>.broadcast();
 
-
   Bloc(Dao<T> dao) {
     _repository = Repository<T>(dao);
   }

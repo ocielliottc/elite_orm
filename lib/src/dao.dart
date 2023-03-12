@@ -24,8 +24,7 @@ class Dao<T extends Entity> {
   /// Get all items from the table.
   Future<List<T>> get({List<String>? columns}) async {
     final db = await _db;
-    List<DatabaseMap> result =
-        await db.query(_entity.table, columns: columns);
+    List<DatabaseMap> result = await db.query(_entity.table, columns: columns);
 
     List<T> objects = [];
     for (var item in result) {
