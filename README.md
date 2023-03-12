@@ -151,27 +151,35 @@ final bloc = Bloc(Dao(EightiesMetal(), DatabaseProvider.database));
 ```
 #### Constructor
 `Bloc(Dao<T> dao)`
+
 Creates a Bloc object.
 
 #### Properties
 `all` &rarr; `Stream<List<T>>`
+
 A stream instance containing a list of all of the database objects of type T.
 
 #### Methods
 `get()` &rarr; `Future<void>`
+
 Gets all of the database objects of type `T` and adds them to the stream controller.
 
 `create(T obj)` &rarr; `Future<void>`
+
 Adds `obj` of type `T` to the database.
 
 `update(T obj)` &rarr; `Future<void>`
+
 Replaces the object with the matching primary key in the database with `obj`.
 
 `delete(dynamic id)`  &rarr; `Future<void>`
+
 Delete the object with the matching id from the database.
 
 `deleteAll()` &rarr; `Future<void>`
+
 Delete all of the objects of type `T` from the database.
 
 `dispose()` &rarr; `void`
+
 Closes the stream controller.
