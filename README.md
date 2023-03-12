@@ -33,17 +33,19 @@ class Supplement extends Entity<Supplement> {
 
   // The constructor for your object does not have to be callable
   // with no parameters.  But, it makes things easier.
-  Supplement([name = "", count = 0]) : super(_create) {
+  Supplement([name = "", count = 0, DateTime? expire]) : super(_create) {
     // The first data member must be a unique identifier.
     // It will be the primary key.
     members.add(DBMember<String>("name", name));
     members.add(DBMember<int>("count", count));
+    members.add(DateTimeDBMember("expire", expire ?? DateTime.now()));
   }
 
   // These are not necessary for storing your model in the database.
   // But, they are recommended to give easy access to the data members.
   String get name => members[0].value;
   int get count => members[1].value;
+  DateTime get expire => members[2].value;
 }
 ```
 ### Creating a DatabaseProvider
@@ -132,7 +134,7 @@ This class extends `DBMember` and expects a `Duration` as the value parameter.  
 This class extends `DBMember` and expects a `List<T>` as the value parameter, where T is `int`, `double`, or `String`.  The value going to and coming from the database is a jSON string.
 
 #### ListDBMember
-This class extends `DBMember` and has different parameters for construction.  The first parameter is a function that will create an object of type T, where T is the template type and must extend `Serializable`.  The next two parameters are the name/value pair, where value is a List<T>.  The last, optional, parameter is a boolean that indicates if it is to be used as part of a composite primary key.  The value going to and coming from the database is a jSON string.
+This class extends `DBMember` and has parameters for construction that are different from DBMember.  The first parameter is a function that will create an object of type T, where T is the template type and must extend `Serializable`.  The next two parameters are the name/value pair, where value is a List<T>.  The last, optional, parameter is a boolean that indicates if it is to be used as part of a composite primary key.  The value going to and coming from the database is a jSON string.
 
 #### ObjectDBMember
-This class extends `DBMember` and has different parameters for construction.  The first parameter is a function that will create an object of type T, where T is the template type and must extend `Serializable`.  The next two parameters are the name/value pair, where value is of type T.  The last, optional, parameter is a boolean that indicates if it is to be used as part of a composite primary key.  The value going to and coming from the database is a jSON string.
+This class extends `DBMember` and has parameters for construction that are different from DBMember.  The first parameter is a function that will create an object of type T, where T is the template type and must extend `Serializable`.  The next two parameters are the name/value pair, where value is of type T.  The last, optional, parameter is a boolean that indicates if it is to be used as part of a composite primary key.  The value going to and coming from the database is a jSON string.

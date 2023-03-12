@@ -19,7 +19,8 @@ class Album extends Entity<Album> {
 }
 
 // An example of how to write a class that implements Serializable.  This would
-// actually be simpler to extend Entity.
+// actually be simpler to implement by extending Entity and using
+// DateTimeDBMember.
 class DBDateTimeRange extends DateTimeRange with Serializable {
   static DBDateTimeRange create() =>
       DBDateTimeRange(start: DateTime.now(), end: DateTime.now());
