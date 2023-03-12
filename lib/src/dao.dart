@@ -41,10 +41,27 @@ class Dao<T extends Entity> {
   }
 
   /// Delete records from the table.
-  Future<int> delete(dynamic id) async {
+  Future<int> delete(dynamic target) async {
     final db = await _db;
-    return await db.delete(_entity.table,
-        where: "${_entity.idColumn} = ?", whereArgs: [id]);
+    String where = "";
+    List whereArgs = [];
+    if (target is T) {
+      bool first = true;
+      for (var m in target.members) {
+        if (first || m.primary) {
+          first = false;
+          if (where.isNotEmpty) {
+            where += " AND ";
+          }
+          where += "${m.key} = ?";
+          whereArgs.add(m.toDB());
+        }
+      }
+    } else {
+      where = "${_entity.idColumn} = ?";
+      whereArgs.add(target);
+    }
+    return await db.delete(_entity.table, where: where, whereArgs: whereArgs);
   }
 
   /// Delete all records from the table.

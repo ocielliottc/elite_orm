@@ -19,7 +19,7 @@ class Repository<T extends Entity> {
 
   Future<int> update(T obj) => _dao.update(obj);
 
-  Future<int> delete(dynamic id) => _dao.delete(id);
+  Future<int> delete(dynamic target) => _dao.delete(target);
 
   Future<int> deleteAll() => _dao.deleteAll();
 }

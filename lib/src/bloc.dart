@@ -34,8 +34,8 @@ class Bloc<T extends Entity> {
     get();
   }
 
-  Future<void> delete(dynamic id) async {
-    _repository.delete(id);
+  Future<void> delete(dynamic target) async {
+    _repository.delete(target);
     get();
   }
 

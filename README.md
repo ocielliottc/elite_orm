@@ -172,9 +172,11 @@ Adds `obj` of type `T` to the database.
 
 Replaces the object with the matching primary key in the database with `obj`.
 
-`delete(dynamic id)`  &rarr; `Future<void>`
+`delete(dynamic target)`  &rarr; `Future<void>`
 
-Delete the object with the matching id from the database.
+Delete the object that matches the target from the database, where target can either be the primary key or an object of type `T` which can be useful when your model has a composite primary key.
+
+If your model has a composite primary key and you pass in a single aspect of the primary key, you can delete all objects that match that aspect. 
 
 `deleteAll()` &rarr; `Future<void>`
 
