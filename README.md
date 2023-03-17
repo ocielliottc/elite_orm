@@ -1,5 +1,8 @@
 # elite_orm
 
+[![Version](https://img.shields.io/pub/v/elite_orm)](https://pub.dev/packages/elite_orm)
+[![License](https://img.shields.io/github/license/ocielliottc/elite_orm)](https://github.com/elliottc/elite_orm)
+
 A simple and easy-to-use ORM built with [sqflite](https://pub.dev/packages/sqflite) in mind.
 
 ## Getting Started
@@ -86,7 +89,7 @@ import 'package:elite_orm/elite_orm.dart';
 import '../model/supplement.dart';
 import '../database/database.dart';
 
-final supplementBloc = Bloc(Dao(Supplement(), DatabaseProvider.database));
+final supplementBloc = Bloc(Supplement(), DatabaseProvider.database);
 ```
 Create an object in the database.
 ```dart
@@ -147,12 +150,14 @@ import 'package:elite_orm/elite_orm.dart';
 import '../model/eighties_metal.dart';
 import '../database/database.dart';
 
-final bloc = Bloc(Dao(EightiesMetal(), DatabaseProvider.database));
+final bloc = Bloc(EightiesMetal(), DatabaseProvider.database);
 ```
 #### Constructor
-`Bloc(Dao<T> dao)`
+`Bloc(T instance, Future db)`
 
 Creates a Bloc object.
+
+The `instance` is not stored in the database; it is used for access to class methods.
 
 #### Properties
 `all` &rarr; `Stream<List<T>>`

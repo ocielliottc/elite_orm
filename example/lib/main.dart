@@ -6,7 +6,7 @@ import 'package:elite_orm/elite_orm.dart';
 import '../model/eighties_metal.dart';
 import '../database/database.dart';
 
-final bloc = Bloc(Dao(EightiesMetal(), DatabaseProvider.database));
+final bloc = Bloc(EightiesMetal(), DatabaseProvider.database);
 
 void main() {
   runApp(const MyApp());
