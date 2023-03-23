@@ -134,16 +134,16 @@ This class extends `DBMember` and expects a `Duration` as the value parameter.  
 This class extends `DBMember` and expects a `List<T>` as the value parameter, where T is `int`, `double`, or `String`.  The value going to and coming from the database is a jSON string.
 
 #### ListDBMember
-This class extends `DBMember` and has parameters for construction that are different from DBMember.  The first parameter is a function that will create an object of type T, where T is the template type and must extend `Serializable`.  The next two parameters are the name/value pair, where value is a List<T>.  The last, optional, parameter is a boolean that indicates if it is to be used as part of a composite primary key.  The value going to and coming from the database is a jSON string.
+This class extends `PrimativeListDBMember` and has parameters for construction that are different from DBMember.  The first parameter is a function that can create an object of type T, where T is the template type and must extend `Serializable`.  The next two parameters are the name/value pair, where value is a List<T>.  The last, optional, parameter is a boolean that indicates if it is to be used as part of a composite primary key.  The value going to and coming from the database is a jSON string.
 
 #### ObjectDBMember
-This class extends `DBMember` and has parameters for construction that are different from DBMember.  The first parameter is a function that will create an object of type T, where T is the template type and must extend `Serializable`.  The next two parameters are the name/value pair, where value is of type T.  The last, optional, parameter is a boolean that indicates if it is to be used as part of a composite primary key.  The value going to and coming from the database is a jSON string.
+This class extends `DBMember` and has parameters for construction that are different from DBMember.  The first parameter is a function that can create an object of type T, where T is the template type and must extend `Serializable`.  The next two parameters are the name/value pair, where value is of type T.  The last, optional, parameter is a boolean that indicates if it is to be used as part of a composite primary key.  The value going to and coming from the database is a jSON string.
 
 ### The Bloc class
 
 The `Bloc` is the interface with which you interact with the database.  Any exceptions thrown by the underlying database implementation are allowed to propagate out of these class methods.
 
-Construction of a `Bloc` requires the construction of a `Dao`, which requires instance of the model class to which this `Bloc` is tied.
+Construction of a `Bloc` requires an instance of the model class to which this `Bloc` is tied and a database provider, which can be taken word-for-word from the [Creating a DatabaseProvider](#creating-a-databaseprovider) section.
 
 ```dart
 import 'package:elite_orm/elite_orm.dart';
@@ -162,7 +162,7 @@ The `instance` is not stored in the database; it is used for access to class met
 #### Properties
 `all` &rarr; `Stream<List<T>>`
 
-A stream instance containing a list of all of the database objects of type T.
+An instance of a Dart asynchronous stream containing a list of all of the database objects of type T.
 
 #### Methods
 `get()` &rarr; `Future<void>`

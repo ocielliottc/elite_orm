@@ -58,9 +58,11 @@ class BoolDBMember extends DBMember<bool> {
   /// multiple database members.
   BoolDBMember(super.key, super.value, [super.primary = false]);
 
+  /// This method is used when creating the data member from the database map.
   @override
-  void fromDB(dynamic v) => value = v == 1 ? true : false;
+  void fromDB(dynamic v) => value = v == 0 ? false: true;
 
+  /// This method is used when sending this data member to the database map.
   @override
   dynamic toDB() => value ? 1 : 0;
 }
@@ -78,12 +80,13 @@ class BinaryDBMember extends DBMember<Uint8List> {
   /// multiple database members.
   BinaryDBMember(super.key, super.value, [super.primary = false]);
 
+  /// Binary data members are represented as BLOB's.
   @override
   String get type => "BLOB";
 }
 
 class DateTimeDBMember extends DBMember<DateTime> {
-  /// Use this to represent an DateTime.
+  /// Use this to represent a DateTime.
   ///
   /// The first parameter is the column name for this data member.
   ///
@@ -95,15 +98,17 @@ class DateTimeDBMember extends DBMember<DateTime> {
   /// multiple database members.
   DateTimeDBMember(super.key, super.value, [super.primary = false]);
 
+  /// This method is used when creating the data member from the database map.
   @override
   void fromDB(dynamic v) => value = DateTime.parse(v);
 
+  /// This method is used when sending this data member to the database map.
   @override
   dynamic toDB() => value.toIso8601String();
 }
 
 class DurationDBMember extends DBMember<Duration> {
-  /// Use this to represent an Duration.
+  /// Use this to represent a Duration.
   ///
   /// The first parameter is the column name for this data member.
   ///
@@ -115,12 +120,15 @@ class DurationDBMember extends DBMember<Duration> {
   /// multiple database members.
   DurationDBMember(super.key, super.value, [super.primary = false]);
 
+  /// This method is used when creating the data member from the database map.
   @override
   void fromDB(dynamic v) => value = Duration(microseconds: v);
 
+  /// This method is used when sending this data member to the database map.
   @override
   dynamic toDB() => value.inMicroseconds;
 
+  /// Durations are represented as microseconds; we use BIGINT to handle them.
   @override
   String get type => "BIGINT";
 }
@@ -138,6 +146,7 @@ class PrimitiveListDBMember<T> extends DBMember<List<T>> {
   /// multiple database members.
   PrimitiveListDBMember(super.key, super.value, [super.primary = false]);
 
+  /// This method is used when creating the data member from the database map.
   @override
   void fromDB(dynamic v) async {
     List<T> list = [];
@@ -148,11 +157,13 @@ class PrimitiveListDBMember<T> extends DBMember<List<T>> {
     value = list;
   }
 
+  /// This method is used when sending this data member to the database map.
   @override
   dynamic toDB() => json.encode(value.isNotEmpty && value.first is String
       ? value.map((e) => '"$e"').toList()
       : value);
 
+  /// Lists are encoded as jSON strings.
   @override
   String get type => "STRING";
 }
@@ -183,6 +194,7 @@ class ListDBMember<T extends Serializable> extends PrimitiveListDBMember<T> {
   /// multiple database members.
   ListDBMember(this._creator, super.key, super.value, [super.primary = false]);
 
+  /// This method is used when creating the data member from the database map.
   @override
   void fromDB(dynamic v) async {
     List<T> list = [];
@@ -195,6 +207,7 @@ class ListDBMember<T extends Serializable> extends PrimitiveListDBMember<T> {
     value = list;
   }
 
+  /// This method is used when sending this data member to the database map.
   @override
   dynamic toDB() => json.encode(value.map((e) => e.toJson()).toList());
 }
@@ -202,7 +215,7 @@ class ListDBMember<T extends Serializable> extends PrimitiveListDBMember<T> {
 class ObjectDBMember<T extends Serializable> extends DBMember<T> {
   final T Function() _creator;
 
-  /// Use this to represent an object that extend Serializable.
+  /// Use this to represent an object that extends Serializable.
   ///
   /// The first parameter is a function that will create an object of type T.
   ///
@@ -217,6 +230,7 @@ class ObjectDBMember<T extends Serializable> extends DBMember<T> {
   ObjectDBMember(this._creator, super.key, super.value,
       [super.primary = false]);
 
+  /// This method is used when creating the data member from the database map.
   @override
   void fromDB(dynamic v) async {
     dynamic item = await _creator().fromJson(json.decode(v));
@@ -225,9 +239,11 @@ class ObjectDBMember<T extends Serializable> extends DBMember<T> {
     }
   }
 
+  /// This method is used when sending this data member to the database map.
   @override
   dynamic toDB() => json.encode(value);
 
+  /// Lists are encoded as jSON strings.
   @override
   String get type => "STRING";
 }
