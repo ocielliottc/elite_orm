@@ -2,7 +2,7 @@ name: elite_orm
 description: A simple and easy-to-use ORM built with sqflite in mind.  It
   provides an object relational mapping without the need to write any
   database code.
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/ocielliottc/elite_orm
 
 environment:

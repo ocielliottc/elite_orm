@@ -1,3 +1,7 @@
+## 1.0.2
+
+- Corrected the `update` method to accommodate composite primary keys.
+
 ## 1.0.1
 
 - Simplified the definition of a model class.
