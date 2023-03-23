@@ -36,8 +36,21 @@ class Dao<T extends Entity> {
   /// Update a record in the table.
   Future<int> update(T obj) async {
     final db = await _db;
+    String where = "";
+    List whereArgs = [];
+    bool first = true;
+    for (var m in obj.members) {
+      if (first || m.primary) {
+        first = false;
+        if (where.isNotEmpty) {
+          where += " AND ";
+        }
+        where += "${m.key} = ?";
+        whereArgs.add(m.toDB());
+      }
+    }
     return await db.update(_entity.table, obj.toJson(),
-        where: "${_entity.idColumn} = ?", whereArgs: [obj.id]);
+        where: where, whereArgs: whereArgs);
   }
 
   /// Delete records from the table.
