@@ -60,7 +60,7 @@ class BoolDBMember extends DBMember<bool> {
 
   /// This method is used when creating the data member from the database map.
   @override
-  void fromDB(dynamic v) => value = v == 0 ? false: true;
+  void fromDB(dynamic v) => value = v == 0 ? false : true;
 
   /// This method is used when sending this data member to the database map.
   @override
@@ -149,10 +149,9 @@ class PrimitiveListDBMember<T> extends DBMember<List<T>> {
   /// This method is used when creating the data member from the database map.
   @override
   void fromDB(dynamic v) async {
-    List<T> list = [];
+    final List<T> list = [];
     for (dynamic e in json.decode(v)) {
-      final T item = e is String ? json.decode(e) : e;
-      list.add(item);
+      list.add(e is String ? json.decode(e) : e);
     }
     value = list;
   }
@@ -197,9 +196,10 @@ class ListDBMember<T extends Serializable> extends PrimitiveListDBMember<T> {
   /// This method is used when creating the data member from the database map.
   @override
   void fromDB(dynamic v) async {
-    List<T> list = [];
+    final List<T> list = [];
+    final T obj = _creator();
     for (DatabaseMap e in json.decode(v)) {
-      dynamic item = await _creator().fromJson(e);
+      dynamic item = await obj.fromJson(e);
       if (item != null) {
         list.add(item);
       }
