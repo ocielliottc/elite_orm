@@ -74,7 +74,15 @@ class Dao<T extends Entity> {
       where = "${_entity.idColumn} = ?";
       whereArgs.add(target);
     }
-    return await db.delete(_entity.table, where: where, whereArgs: whereArgs);
+
+    // If the number of items deleted was zero or less, throw an exception
+    // so that the caller knows nothing was deleted.
+    final int result =
+        await db.delete(_entity.table, where: where, whereArgs: whereArgs);
+    if (result <= 0) {
+      throw Exception("Unable to delete the object: $whereArgs");
+    }
+    return result;
   }
 
   /// Delete all records from the table.
