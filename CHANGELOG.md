@@ -1,3 +1,7 @@
+## 1.0.3
+
+- Throw an exception when we fail to delete an object.
+
 ## 1.0.2
 
 - Corrected the `update` method to accommodate composite primary keys.
