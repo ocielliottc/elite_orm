@@ -1,10 +1,12 @@
+## 1.0.5
+
+- Added missing `await` in `Bloc.delete` and `Bloc.deleteAll`.
+
 ## 1.0.4
 
 - Corrected serialization of primitive lists.
 
 - Added an equality operator and hash function to `Entity` to allow child classes to automatically be able to be stored in a Set.
-
-- Added missing `await` in `Bloc.delete` and `Bloc.deleteAll`.
 
 ## 1.0.3
 
