@@ -44,13 +44,13 @@ class Bloc<T extends Entity> {
   /// Deletes one or more objects from the database.
   /// Target can be either a primary key or an object of type T.
   Future<void> delete(dynamic target) async {
-    _repository.delete(target);
+    await _repository.delete(target);
     get();
   }
 
   /// Deletes all objects of type T from the database.
   Future<void> deleteAll() async {
-    _repository.deleteAll();
+    await _repository.deleteAll();
     get();
   }
 
