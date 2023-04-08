@@ -1,3 +1,9 @@
+## 1.0.4
+
+- Corrected serialization of primitive lists.
+
+- Added an equality operator and hash function to `Entity` to allow child classes to automatically be able to be stored in a Set.
+
 ## 1.0.3
 
 - Throw an exception when we fail to delete an object.
