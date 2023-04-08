@@ -24,9 +24,10 @@ class Dao<T extends Entity> {
   /// Get all items from the table.
   Future<List<T>> get({List<String>? columns}) async {
     final db = await _db;
-    List<DatabaseMap> result = await db.query(_entity.table, columns: columns);
+    final List<DatabaseMap> result =
+        await db.query(_entity.table, columns: columns);
 
-    List<T> objects = [];
+    final List<T> objects = [];
     for (var item in result) {
       objects.add(await _entity.fromJson(item));
     }
@@ -36,8 +37,8 @@ class Dao<T extends Entity> {
   /// Update a record in the table.
   Future<int> update(T obj) async {
     final db = await _db;
+    final List whereArgs = [];
     String where = "";
-    List whereArgs = [];
     bool first = true;
     for (var m in obj.members) {
       if (first || m.primary) {
@@ -56,8 +57,8 @@ class Dao<T extends Entity> {
   /// Delete records from the table.
   Future<int> delete(dynamic target) async {
     final db = await _db;
+    final List whereArgs = [];
     String where = "";
-    List whereArgs = [];
     if (target is T) {
       bool first = true;
       for (var m in target.members) {
