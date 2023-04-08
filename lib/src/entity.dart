@@ -5,7 +5,7 @@ import 'db_type.dart';
 /// The model classes extend this interface and, by doing so, enable the
 /// model class to represent database objects.
 class Entity<T> extends Serializable {
-  List<DBMember> members = [];
+  final List<DBMember> members = [];
   final T Function() _creator;
 
   /// The _creator parameter is a function that constructs an object of type T
@@ -50,7 +50,7 @@ class Entity<T> extends Serializable {
   /// Iterate over the members and create a database map out of them.
   @override
   DatabaseMap toJson() {
-    DatabaseMap map = {};
+    final DatabaseMap map = {};
     for (var member in members) {
       map[member.key] = member.toDB();
     }
@@ -71,4 +71,23 @@ class Entity<T> extends Serializable {
     }
     return obj;
   }
+
+  /// Check the equality of all of the database members.
+  @override
+  bool operator ==(covariant Entity<T> other) {
+    if (runtimeType == other.runtimeType &&
+        members.length == other.members.length) {
+      for (int i = 0; i < members.length; i++) {
+        if (members[i] != other.members[i]) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+
+  /// Hash all of the database members.
+  @override
+  int get hashCode => Object.hashAll(members);
 }

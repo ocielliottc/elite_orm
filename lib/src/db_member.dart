@@ -28,6 +28,19 @@ class DBMember<T> {
   /// This method is used when describing the table to which this data member
   /// belongs.
   String get type => value.runtimeType.toString();
+
+  /// Check equality of the data members and the database type.
+  @override
+  bool operator ==(covariant DBMember<T> other) {
+    return type == other.type &&
+        primary == other.primary &&
+        key == other.key &&
+        value == other.value;
+  }
+
+  /// Hash the data members and the database type.
+  @override
+  int get hashCode => Object.hash(key, value, primary, type);
 }
 
 class EnumDBMember<T extends Enum> extends DBMember<int> {
@@ -151,16 +164,14 @@ class PrimitiveListDBMember<T> extends DBMember<List<T>> {
   void fromDB(dynamic v) async {
     final List<T> list = [];
     for (dynamic e in json.decode(v)) {
-      list.add(e is String ? json.decode(e) : e);
+      list.add(e);
     }
     value = list;
   }
 
   /// This method is used when sending this data member to the database map.
   @override
-  dynamic toDB() => json.encode(value.isNotEmpty && value.first is String
-      ? value.map((e) => '"$e"').toList()
-      : value);
+  dynamic toDB() => json.encode(value);
 
   /// Lists are encoded as jSON strings.
   @override
