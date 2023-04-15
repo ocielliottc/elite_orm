@@ -169,21 +169,21 @@ An instance of a Dart asynchronous stream containing a list of all of the databa
 
 Gets all of the database objects of type `T` and adds them to the stream controller.
 
-`create(T obj)` &rarr; `Future<void>`
+`create(T obj)` &rarr; `Future<int>`
 
 Adds `obj` of type `T` to the database.
 
-`update(T obj)` &rarr; `Future<void>`
+`update(T obj)` &rarr; `Future<int>`
 
 Replaces the object with the matching primary key in the database with `obj`.
 
-`delete(dynamic target)`  &rarr; `Future<void>`
+`delete(dynamic target)`  &rarr; `Future<int>`
 
 Delete the object that matches the target from the database, where target can either be the primary key or an object of type `T` which can be useful when your model has a composite primary key.
 
 If your model has a composite primary key and you pass in a single aspect of the primary key, you can delete all objects that match that aspect. 
 
-`deleteAll()` &rarr; `Future<void>`
+`deleteAll()` &rarr; `Future<int>`
 
 Delete all of the objects of type `T` from the database.
 
