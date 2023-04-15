@@ -22,6 +22,9 @@ class Entity<T> extends Serializable {
   dynamic get id => members.first.value;
 
   /// The dynamically determined runtime type of the sub-class is the table name.
+  ///
+  /// You may need to override this in your class if you intend on using
+  /// obfuscation when building your application.
   String get table => "$runtimeType";
 
   /// Describe the SQL table based on the table name and individual members.
