@@ -1,3 +1,11 @@
+## 1.0.6
+
+- Propagate database operations return value out to the bloc.
+
+- Throw an exception on error when updating fails.
+
+- Take the list of enum values when constructing the EnumDBMember to automate conversion to and from the int value.
+
 ## 1.0.5
 
 - Added missing `await` in `Bloc.delete` and `Bloc.deleteAll`.
