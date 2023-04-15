@@ -58,7 +58,7 @@ class EightiesMetal extends Entity<EightiesMetal> {
     // Because this member is first, it is the primary key.
     members.add(DBMember<String>("name", name));
     members.add(ObjectDBMember<Album>(Album.new, "album", album ?? Album()));
-    members.add(EnumDBMember<MetalSubGenre>("type", genre, MetalSubGenre.values));
+    members.add(EnumDBMember<MetalSubGenre>(MetalSubGenre.values, "type", genre));
     members.add(BoolDBMember("defunct", defunct));
     members.add(DateTimeDBMember("formed", formed ?? DateTime.now()));
     members.add(

@@ -43,19 +43,36 @@ class DBMember<T> {
   int get hashCode => Object.hash(key, value, primary, type);
 }
 
-class EnumDBMember<T extends Enum> extends DBMember<int> {
+class EnumDBMember<T extends Enum> extends DBMember<T> {
+  final List<T> values;
+
   /// Use this to represent an Enum.
   ///
-  /// The first parameter is the column name for this data member.
+  /// The first parameter is the list of enum values.
   ///
-  /// The second parameter is the initial data member value.
+  /// The second parameter is the column name for this data member.
   ///
-  /// The third parameter indicates if this column is part of the primary
+  /// The third parameter is the initial data member value.
+  ///
+  /// The fourth parameter indicates if this column is part of the primary
   /// key.  The first member of the Entity class is always part of the primary
   /// key.  But, you can create a composite primary key by passing true to
   /// multiple database members.
-  EnumDBMember(String key, T value, [primary = false])
-      : super(key, value.index, primary);
+  EnumDBMember(this.values, String key, T value, [primary = false])
+      : super(key, value, primary);
+
+  /// This method is used when creating the data member from the database map.
+  @override
+  void fromDB(dynamic v) => value = values[v];
+
+  /// This method is used when sending this data member to the database map.
+  @override
+  dynamic toDB() => value.index;
+
+  /// This method is used when describing the table to which this data member
+  /// belongs.
+  @override
+  String get type => 'INT';
 }
 
 class BoolDBMember extends DBMember<bool> {
