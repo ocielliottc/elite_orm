@@ -30,28 +30,32 @@ class Bloc<T extends Entity> {
   }
 
   /// Creates a new object in the database.
-  Future<void> create(T obj) async {
-    await _repository.create(obj);
+  Future<int> create(T obj) async {
+    final int result = await _repository.create(obj);
     get();
+    return result;
   }
 
   /// Updates an existing object in the database.
-  Future<void> update(T obj) async {
-    await _repository.update(obj);
+  Future<int> update(T obj) async {
+    final int result = await _repository.update(obj);
     get();
+    return result;
   }
 
   /// Deletes one or more objects from the database.
   /// Target can be either a primary key or an object of type T.
-  Future<void> delete(dynamic target) async {
-    await _repository.delete(target);
+  Future<int> delete(dynamic target) async {
+    final int result = await _repository.delete(target);
     get();
+    return result;
   }
 
   /// Deletes all objects of type T from the database.
-  Future<void> deleteAll() async {
-    await _repository.deleteAll();
+  Future<int> deleteAll() async {
+    final int result = await _repository.deleteAll();
     get();
+    return result;
   }
 
   /// Closes the stream controller.
