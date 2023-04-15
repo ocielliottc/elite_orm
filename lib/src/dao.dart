@@ -50,8 +50,12 @@ class Dao<T extends Entity> {
         whereArgs.add(m.toDB());
       }
     }
-    return await db.update(_entity.table, obj.toJson(),
+    final int result = await db.update(_entity.table, obj.toJson(),
         where: where, whereArgs: whereArgs);
+    if (result <= 0) {
+      throw Exception("Unable to update the object: $whereArgs");
+    }
+    return result;
   }
 
   /// Delete records from the table.
