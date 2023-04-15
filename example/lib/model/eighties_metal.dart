@@ -5,30 +5,37 @@ import 'package:flutter/material.dart';
 enum MetalSubGenre { death, thrash, speed, hair, doom, sludge }
 
 class Album extends Entity<Album> {
+  /// This is our model representative of an album.
   Album([name = "", DateTime? release, Duration? length]) : super(Album.new) {
     members.add(DBMember<String>("name", name));
     members.add(DateTimeDBMember("release", release ?? DateTime.now()));
     members.add(DurationDBMember("length", length ?? const Duration()));
   }
 
+  /// The name of the album.
   String get name => members[0].value;
+  /// The release date of the album.
   DateTime get release => members[1].value;
+  /// The length of the album.
   Duration get length => members[2].value;
 }
 
-// An example of how to write a class that implements Serializable.  This would
-// actually be simpler to implement by extending Entity and using
-// DateTimeDBMember.
+/// An example of how to write a class that implements Serializable.  This would
+/// actually be simpler to implement by extending Entity and using
+/// DateTimeDBMember.
 class DBDateTimeRange extends DateTimeRange with Serializable {
+  /// A database representation of flutter's DateTimeRange
   DBDateTimeRange([DateTime? start, DateTime? end])
       : super(start: start ?? DateTime.now(), end: end ?? DateTime.now());
 
+  /// Construct an object given the values stored within the database map.
   @override
   Future fromJson(DatabaseMap map) async {
     return DBDateTimeRange(
         DateTime.parse(map["start"]), DateTime.parse(map["end"]));
   }
 
+  /// Convert an object into a map of name/value pairs.
   @override
   DatabaseMap toJson() {
     return {"start": start.toIso8601String(), "end": end.toIso8601String()};
@@ -36,6 +43,7 @@ class DBDateTimeRange extends DateTimeRange with Serializable {
 }
 
 class EightiesMetal extends Entity<EightiesMetal> {
+  /// Represent information about an 80s metal band.
   EightiesMetal([
     name = "",
     Album? album,
@@ -50,7 +58,7 @@ class EightiesMetal extends Entity<EightiesMetal> {
     // Because this member is first, it is the primary key.
     members.add(DBMember<String>("name", name));
     members.add(ObjectDBMember<Album>(Album.new, "album", album ?? Album()));
-    members.add(EnumDBMember<MetalSubGenre>("type", genre));
+    members.add(EnumDBMember<MetalSubGenre>("type", genre, MetalSubGenre.values));
     members.add(BoolDBMember("defunct", defunct));
     members.add(DateTimeDBMember("formed", formed ?? DateTime.now()));
     members.add(
@@ -61,18 +69,26 @@ class EightiesMetal extends Entity<EightiesMetal> {
     members.add(BinaryDBMember("logo", logo ?? Uint8List(0)));
   }
 
+  /// The name of the band.
   String get name => members[0].value;
+  /// The name of the album.
   Album get album => members[1].value;
 
-  // An enum will be stored as an int in the database.  Convert to and from
-  // using the enum values and index.
-  MetalSubGenre get genre => MetalSubGenre.values[members[2].value];
-  set genre(MetalSubGenre genre) => members[2].value = genre.index;
+  /// The genre of the band.
+  MetalSubGenre get genre => members[2].value;
+  /// Allow the caller to change the genre.
+  set genre(MetalSubGenre genre) => members[2].value = genre;
 
+  /// Has the band broken up?
   bool get defunct => members[3].value;
+  /// The date the band was formed.
   DateTime get formed => members[4].value;
+  /// The date time ranges of band activity.
   List<DateTimeRange> get active => members[5].value;
+  /// A list of band members.
   List<String> get bandMembers => members[6].value;
+  /// A list of years during which studio albums were released.
   List<int> get studioAlbumYears => members[7].value;
+  /// A png representation of the band logo.
   Uint8List get logo => members[8].value;
 }

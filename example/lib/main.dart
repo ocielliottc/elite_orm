@@ -8,13 +8,16 @@ import '../database/database.dart';
 
 final bloc = Bloc(EightiesMetal(), DatabaseProvider.database);
 
+/// The entry point for all applications.
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  /// Creates the application.
   const MyApp({super.key});
 
+  /// Describes the part of the user interface represented by this widget.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,8 +33,10 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   final String title;
 
+  /// Create the widget for the home screen.
   const MyHomePage({super.key, required this.title});
 
+  /// Creates the mutable state for this widget at a given location in the tree.
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -197,12 +202,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  /// Called when this object is inserted into the tree.
   @override
   void initState() {
     super.initState();
     bloc.get();
   }
 
+  /// Describes the part of the user interface represented by this widget.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -220,6 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  /// Called when this object is removed from the tree permanently.
   @override
   dispose() {
     super.dispose();
