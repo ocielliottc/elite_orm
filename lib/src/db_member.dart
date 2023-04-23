@@ -3,8 +3,14 @@ import 'dart:typed_data';
 import 'db_type.dart';
 
 class DBMember<T> {
+  /// This is the name of the database member.  It is used as the column name
+  /// in the database.
   final String key;
+
+  /// The value of the database member.
   T value;
+
+  /// Indicates that this database member is part of the primary key.
   final bool primary;
 
   /// Use this to represent int, double, or String.
@@ -44,6 +50,8 @@ class DBMember<T> {
 }
 
 class EnumDBMember<T extends Enum> extends DBMember<T> {
+  /// The list of enum values as provided by the constructor.  It should be
+  /// equivalent to T.values.
   final List<T> values;
 
   /// Use this to represent an Enum.
@@ -174,7 +182,12 @@ class PrimitiveListDBMember<T> extends DBMember<List<T>> {
   /// key.  The first member of the Entity class is always part of the primary
   /// key.  But, you can create a composite primary key by passing true to
   /// multiple database members.
-  PrimitiveListDBMember(super.key, super.value, [super.primary = false]);
+  PrimitiveListDBMember(super.key, super.value, [super.primary = false]) {
+    // We make a copy because the value passed in could be const and, therefore,
+    // immutable.  In order to allow elite_orm_editor to modify an Entity
+    // in-place, the list must be modifiable.
+    value = <T>[...value];
+  }
 
   /// This method is used when creating the data member from the database map.
   @override
