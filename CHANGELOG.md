@@ -1,3 +1,13 @@
+## 1.0.7
+
+- Removed unused parameter to `Dao.get()`.
+
+- Copy the list value in `PrimitiveListDBMember` to allow the value to be modified, in the event that the list passed in was `const`.
+
+- Removed the unused `id` property from `Entity`.
+
+- Throw an `Exception` object in `Entity.fromJson` instead of a String.
+
 ## 1.0.6
 
 - Propagate database operations return value out to the bloc.
