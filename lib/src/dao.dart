@@ -12,7 +12,7 @@ class Dao<T extends Entity> {
   final Future _db;
 
   /// Provide an object of the type that this data access object will handle.
-  /// The second parameter is the Future<Database> to call into.
+  /// The second parameter is the Database Future to call into.
   Dao(this._entity, this._db);
 
   /// Creates new records in the table.
@@ -22,10 +22,9 @@ class Dao<T extends Entity> {
   }
 
   /// Get all items from the table.
-  Future<List<T>> get({List<String>? columns}) async {
+  Future<List<T>> get() async {
     final db = await _db;
-    final List<DatabaseMap> result =
-        await db.query(_entity.table, columns: columns);
+    final List<DatabaseMap> result = await db.query(_entity.table);
 
     final List<T> objects = [];
     for (var item in result) {
