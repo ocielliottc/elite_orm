@@ -5,27 +5,26 @@ import 'db_type.dart';
 /// The model classes extend this interface and, by doing so, enable the
 /// model class to represent database objects.
 class Entity<T> extends Serializable {
+  /// This stores the set of database members.  This will be set during
+  /// construction and should not be modified afterward.  The values of the
+  /// individual members can be modified, but the list itself should not be.
   final List<DBMember> members = [];
   final T Function() _creator;
 
   /// The _creator parameter is a function that constructs an object of type T
   /// and returns it.  This is used to construct objects from the database map
-  /// values.
+  /// values.  Typically, this will be T.new where T is your model class.
   Entity(this._creator);
 
-  /// The first database member in the sub-class is always going to be the
-  /// primary key.  This returns the name of the column.
+  /// The first database member in the sub-class is always going to be part of
+  /// the primary key.  This returns the name of only the first member.
   dynamic get idColumn => members.first.key;
-
-  /// The first database member in the sub-class is always going to be the
-  /// primary key.  This returns the name.
-  dynamic get id => members.first.value;
 
   /// The dynamically determined runtime type of the sub-class is the table name.
   ///
   /// You may need to override this in your class if you intend on using
   /// obfuscation when building your application.
-  String get table => "$runtimeType";
+  String get table => runtimeType.toString();
 
   /// Describe the SQL table based on the table name and individual members.
   String describeTable() {
@@ -69,7 +68,7 @@ class Entity<T> extends Serializable {
       if (map.containsKey(member.key)) {
         member.fromDB(map[member.key]);
       } else {
-        throw "Unknown data member key: ${member.key}";
+        throw Exception("Unknown data member key: ${member.key}");
       }
     }
     return obj;
