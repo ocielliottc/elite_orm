@@ -116,7 +116,7 @@ Click [here](https://github.com/ocielliottc/elite_orm/tree/main/example/lib) to 
 This is the base class for all database members.  It is a name/value pair that can be used to represent `int`, `double`, and `Strings`.  It has an optional boolean parameter that indicates if it is to be used as part of a composite primary key.
 
 #### EnumDBMember
-This class extends `DBMember` and expects an `Enum` type as the value parameter.  The value going to and coming from the database is the integer index into the `Enum` type.
+This class extends `DBMember`, expects an `Enum` type as the value parameter, and has parameters for construction that are different from DBMember.  The first parameter is the list of enum values.  The next two parameters are the name/value pair.  The value going to and coming from the database is the integer index into the `Enum` type.
 
 #### BoolDBMember
 This class extends `DBMember` and expects a `bool` as the value parameter.  The value going to and coming from the database is the integer representation of true or false.
