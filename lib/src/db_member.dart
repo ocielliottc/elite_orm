@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:collection/collection.dart';
 import 'db_type.dart';
 
 class DBMember<T> {
@@ -215,6 +216,23 @@ abstract class Serializable {
 
   /// Convert an object into a map of name/value pairs.
   DatabaseMap toJson();
+
+  /// Check the equality of all of the members of the jSON map.
+  @override
+  bool operator ==(covariant Serializable other) {
+    final DatabaseMap left = toJson();
+    final DatabaseMap right = other.toJson();
+    return DeepCollectionEquality.unordered().equals(left, right);
+  }
+
+  /// Hash all of the members of the jSON map.
+  @override
+  int get hashCode {
+    final DatabaseMap map = toJson();
+    final List objects = map.values.toList();
+    objects.addAll(map.keys);
+    return Object.hashAll(objects);
+  }
 }
 
 class ListDBMember<T extends Serializable> extends PrimitiveListDBMember<T> {
