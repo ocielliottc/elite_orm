@@ -1,3 +1,7 @@
+## 1.0.8
+
+- Added an equality operator and `hashCode` method.
+
 ## 1.0.7
 
 - Removed unused parameter to `Dao.get()`.
