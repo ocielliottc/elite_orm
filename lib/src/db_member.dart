@@ -27,7 +27,9 @@ class DBMember<T> {
   DBMember(this.key, this.value, [this.primary = false]);
 
   /// This method is used when creating the data member from the database map.
-  void fromDB(dynamic v) => value = v;
+  void fromDB(dynamic v) {
+    if (v != null) value = v;
+  }
 
   /// This method is used when sending this data member to the database map.
   dynamic toDB() => value;
@@ -72,7 +74,9 @@ class EnumDBMember<T extends Enum> extends DBMember<T> {
 
   /// This method is used when creating the data member from the database map.
   @override
-  void fromDB(dynamic v) => value = values[v];
+  void fromDB(dynamic v) {
+    if (v != null) value = values[v];
+  }
 
   /// This method is used when sending this data member to the database map.
   @override
@@ -99,7 +103,9 @@ class BoolDBMember extends DBMember<bool> {
 
   /// This method is used when creating the data member from the database map.
   @override
-  void fromDB(dynamic v) => value = v == 0 ? false : true;
+  void fromDB(dynamic v) {
+    if (v != null) value = v == 0 ? false : true;
+  }
 
   /// This method is used when sending this data member to the database map.
   @override
@@ -139,7 +145,9 @@ class DateTimeDBMember extends DBMember<DateTime> {
 
   /// This method is used when creating the data member from the database map.
   @override
-  void fromDB(dynamic v) => value = DateTime.parse(v);
+  void fromDB(dynamic v) {
+    if (v != null) value = DateTime.parse(v);
+  }
 
   /// This method is used when sending this data member to the database map.
   @override
@@ -161,7 +169,9 @@ class DurationDBMember extends DBMember<Duration> {
 
   /// This method is used when creating the data member from the database map.
   @override
-  void fromDB(dynamic v) => value = Duration(microseconds: v);
+  void fromDB(dynamic v) {
+    if (v != null) value = Duration(microseconds: v);
+  }
 
   /// This method is used when sending this data member to the database map.
   @override
@@ -193,11 +203,13 @@ class PrimitiveListDBMember<T> extends DBMember<List<T>> {
   /// This method is used when creating the data member from the database map.
   @override
   void fromDB(dynamic v) async {
-    final List<T> list = [];
-    for (dynamic e in json.decode(v)) {
-      list.add(e);
+    if (v != null) {
+      final List<T> list = [];
+      for (dynamic e in json.decode(v)) {
+        list.add(e);
+      }
+      value = list;
     }
-    value = list;
   }
 
   /// This method is used when sending this data member to the database map.
@@ -255,15 +267,17 @@ class ListDBMember<T extends Serializable> extends PrimitiveListDBMember<T> {
   /// This method is used when creating the data member from the database map.
   @override
   void fromDB(dynamic v) async {
-    final List<T> list = [];
-    final T obj = _creator();
-    for (DatabaseMap e in json.decode(v)) {
-      dynamic item = await obj.fromJson(e);
-      if (item != null) {
-        list.add(item);
+    if (v != null) {
+      final List<T> list = [];
+      final T obj = _creator();
+      for (DatabaseMap e in json.decode(v)) {
+        dynamic item = await obj.fromJson(e);
+        if (item != null) {
+          list.add(item);
+        }
       }
+      value = list;
     }
-    value = list;
   }
 
   /// This method is used when sending this data member to the database map.
@@ -292,9 +306,11 @@ class ObjectDBMember<T extends Serializable> extends DBMember<T> {
   /// This method is used when creating the data member from the database map.
   @override
   void fromDB(dynamic v) async {
-    dynamic item = await _creator().fromJson(json.decode(v));
-    if (item != null) {
-      value = item;
+    if (v != null) {
+      dynamic item = await _creator().fromJson(json.decode(v));
+      if (item != null) {
+        value = item;
+      }
     }
   }
 
