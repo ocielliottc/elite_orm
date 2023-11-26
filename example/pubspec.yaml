@@ -40,7 +40,7 @@ dependencies:
   path_provider: ^2.0.13
   path: ^1.8.2
   http: ^0.13.5
-  elite_orm: ^1.0.8
+  elite_orm: ^1.0.9
 
 dev_dependencies:
   flutter_test:

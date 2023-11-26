@@ -1,3 +1,7 @@
+## 1.0.9
+
+- Allow loading of database objects from an older schema.
+
 ## 1.0.8
 
 - Added an equality operator and `hashCode` method.
